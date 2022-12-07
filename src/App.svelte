@@ -1,6 +1,8 @@
 <script>
     import Cloudlink from "./lib/cloudlink.js";
-    import Login from "./Login.svelte";
+    import { screen, postList } from "./lib/stores.js";
+    import Login from "./screens/Login.svelte";
+    import Home from "./screens/Home.svelte";
 
     function onConnect() {
         setInterval(() => { cl.send({ cmd: "ping", val: "" }); }, 10000);
@@ -18,6 +20,15 @@
 
     function onDirect(cmd) {
         console.log(`%cINCOMING: ${JSON.stringify(cmd)}`, "color: gray; font-style: italic");
+
+        if (Object.hasOwn(cmd.val, "post_origin")) {
+            if (cmd.val.post_origin === "home" && $screen === "home") {
+                let postUpdator = $postList;
+
+                postUpdator.push(cmd.val);
+                postList.set(postUpdator);
+            }
+        }
     }
 
     // Initialize cloudlink and assign callbacks
@@ -28,4 +39,14 @@
     cl.on("direct", onDirect);
 </script>
 
-<Login {cl} />
+<h1>Meower Pro</h1>
+{#if $screen === "login"}
+    <Login {cl} />
+{:else if $screen === "home"}
+    <Home {cl} />
+{:else}
+    <center>
+        <h1>4040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040</h1>
+        <p>Error code <code>4040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040</code>: you are an idiot</p>
+    </center>
+{/if}
