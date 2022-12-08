@@ -1,11 +1,11 @@
 <script>
     import Cloudlink from "./lib/cloudlink.js";
-    import { screen, postList } from "./lib/stores.js";
+    import { screen, postList, postHistoryLoaded } from "./lib/stores.js";
     import Login from "./screens/Login.svelte";
     import Home from "./screens/Home.svelte";
 
     function onConnect() {
-        setInterval(() => { cl.send({ cmd: "ping", val: "" }); }, 10000);
+        setInterval(() => { cl.send({ cmd: "ping", val: "" }) }, 10000);
         cl.send({ cmd: "direct", val: "meower", listener: "trust" });
         console.log("Connected!");
     }
@@ -23,10 +23,12 @@
 
         if (Object.hasOwn(cmd.val, "post_origin")) {
             if (cmd.val.post_origin === "home" && $screen === "home") {
-                let postUpdator = $postList;
+                if (postHistoryLoaded) {
+                    let postUpdator = $postList;
 
-                postUpdator.push(cmd.val);
-                postList.set(postUpdator);
+                    postUpdator.push(cmd.val);
+                    postList.set(postUpdator);
+                }
             }
         }
     }
