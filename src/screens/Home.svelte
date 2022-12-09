@@ -11,7 +11,7 @@
         .then(() => {
             let postUpdator = $postList;
 
-            homePageData.autoget.forEach((item) => { postUpdator.push(item) });
+            homePageData.autoget.reverse().forEach((item) => { postUpdator.push(item) });
             postList.set(postUpdator);
         })
         .then(() => { postHistoryLoaded.set(true) });
@@ -28,7 +28,10 @@
     <input type="text" name="postContent" value="" placeholder="Once upon a time...">
     <input type="submit" value="Post">
 </form>
-
-{#each $postList as post}
-    <p><strong>{post.u}:</strong> {post.p}</p>
-{/each}
+{#if $postHistoryLoaded}
+    {#each $postList.reverse() as post}
+        <p><strong>{post.u}:</strong> {post.p}</p>
+    {/each}
+{:else}
+    <p>Loading posts...</p>
+{/if}

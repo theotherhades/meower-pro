@@ -3,6 +3,7 @@
     import { screen, postList, postHistoryLoaded } from "./lib/stores.js";
     import Login from "./screens/Login.svelte";
     import Home from "./screens/Home.svelte";
+    import Start from "./screens/Start.svelte";
 
     function onConnect() {
         setInterval(() => { cl.send({ cmd: "ping", val: "" }) }, 10000);
@@ -42,7 +43,9 @@
 </script>
 
 <h1>Meower Pro</h1>
-{#if $screen === "login"}
+{#if $screen === "start"}
+    <Start />
+{:else if $screen === "login"}
     <Login {cl} />
 {:else if $screen === "home"}
     <Home {cl} />
