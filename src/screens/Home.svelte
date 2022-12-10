@@ -1,7 +1,9 @@
 <script>
     export let cl;
     import loadForm from "../lib/miscutils";
-    import { postList, postHistoryLoaded } from "../lib/stores";
+    import { postList, postHistoryLoaded, screenHeader, ulist } from "../lib/stores";
+
+    screenHeader.set("Home");
 
     // Load last page of home
     let homePageData;
@@ -24,12 +26,18 @@
     }
 </script>
 
+<p><strong>Users online:</strong> 
+{#each $ulist as user}
+    {user}
+{/each}
+</p>
+
 <form on:submit|preventDefault={sendPost}>
     <input type="text" name="postContent" value="" placeholder="Once upon a time...">
     <input type="submit" value="Post">
 </form>
 {#if $postHistoryLoaded}
-    {#each $postList.reverse() as post}
+    {#each $postList.slice().reverse() as post}
         <p><strong>{post.u}:</strong> {post.p}</p>
     {/each}
 {:else}

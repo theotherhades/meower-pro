@@ -1,7 +1,9 @@
 <script>
     export let cl;
     import loadForm from "../lib/miscutils";
-    import { screen } from "../lib/stores";
+    import { screen, screenHeader } from "../lib/stores";
+
+    screenHeader.set("Login to Meower");
 
     function login(credentialsForm) {
         const credentials = loadForm(credentialsForm);

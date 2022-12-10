@@ -1,6 +1,6 @@
 <script>
     import Cloudlink from "./lib/cloudlink.js";
-    import { screen, postList, postHistoryLoaded } from "./lib/stores.js";
+    import { screen, screenHeader, postList, postHistoryLoaded, ulist } from "./lib/stores.js";
     import Login from "./screens/Login.svelte";
     import Home from "./screens/Home.svelte";
     import Start from "./screens/Start.svelte";
@@ -40,9 +40,10 @@
     cl.on("disconnected", onDisconnect);
     cl.on("error", onError);
     cl.on("direct", onDirect);
+    cl.on("ulist", (packet) => { ulist.set(packet.val.split(";")) });
 </script>
 
-<h1>Meower Pro</h1>
+<h1>{$screenHeader}</h1>
 {#if $screen === "start"}
     <Start />
 {:else if $screen === "login"}
