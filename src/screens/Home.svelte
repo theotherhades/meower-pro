@@ -26,10 +26,8 @@
     }
 </script>
 
-<p><strong>Users online:</strong> 
-{#each $ulist as user}
-    {user}
-{/each}
+<p><strong>{$ulist.length} users online:</strong> 
+{$ulist.join(", ").slice(0, -2)}
 </p>
 
 <form on:submit|preventDefault={sendPost}>
