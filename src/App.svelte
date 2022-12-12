@@ -1,6 +1,6 @@
 <script>
     import Cloudlink from "./lib/cloudlink.js";
-    import { screen, screenHeader, postList, postHistoryLoaded, ulist } from "./lib/stores.js";
+    import { screen, screenHeader, postList, postHistoryLoaded, ulist, username, APIToken } from "./lib/stores.js";
     import Login from "./screens/Login.svelte";
     import Home from "./screens/Home.svelte";
     import Start from "./screens/Start.svelte";
@@ -30,6 +30,12 @@
                     postUpdator.push(cmd.val);
                     postList.set(postUpdator);
                 }
+            }
+        } else if (Object.hasOwn(cmd.val, "mode")) {
+            if (cmd.val.mode === "auth") {
+                username.set(cmd.val.payload.username);
+                APIToken.set(cmd.val.payload.token);
+                console.log(`Logged in as ${$username}`);
             }
         }
     }
