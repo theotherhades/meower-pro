@@ -12,7 +12,7 @@ A work in progress alternative Meower client, designed with plugin-based customi
 ### Getting Started
 Clone the repo and install dependancies:
 ```
-git clone https://github.com/theotherhades/meower-pro
+git clone https://github.com/theotherhades/meower-pro.git
 cd meower-pro
 npm install
 ```
