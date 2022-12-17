@@ -66,7 +66,7 @@
 </form>
 {#if $postHistoryLoaded}
     {#each $postList.slice().reverse() as post}
-        <p><strong>{post.u}:</strong> {@html snarkdown(DOMPurify.sanitize(post.p))} </p>
+        <p><strong>{post.u}:</strong> {@html snarkdown(DOMPurify.sanitize(post.p.replaceAll("\n", "\\n"))).replaceAll("\\n", "<br>")} </p>
     {/each}
     {#if morePostsLoaded}
         <button on:click={loadMore}>Load more</button>
