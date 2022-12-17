@@ -4,6 +4,7 @@
     import Login from "./screens/Login.svelte";
     import Home from "./screens/Home.svelte";
     import Start from "./screens/Start.svelte";
+    import Userpage from "./screens/Userpage.svelte";
 
     function onConnect() {
         setInterval(() => { cl.send({ cmd: "ping", val: "" }) }, 10000);
@@ -56,6 +57,8 @@
     <Login {cl} />
 {:else if $screen === "home"}
     <Home {cl} />
+{:else if $screen === "user"}
+    <Userpage />
 {:else}
     <center>
         <h1>4040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040</h1>

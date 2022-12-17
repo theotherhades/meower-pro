@@ -8,3 +8,4 @@ export const lastPageLoaded = writable(0);
 export const ulist = writable([]);
 export const username = writable("");
 export const APIToken = writable("");
+export const userpage = writable("");

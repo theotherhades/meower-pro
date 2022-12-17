@@ -1,7 +1,7 @@
 <script>
     export let cl;
     import loadForm from "../lib/miscutils";
-    import { postList, postHistoryLoaded, lastPageLoaded, screenHeader, ulist, username, APIToken } from "../lib/stores";
+    import { screen, postList, postHistoryLoaded, lastPageLoaded, screenHeader, ulist, username, APIToken, userpage } from "../lib/stores";
     import DOMPurify from "dompurify";
     import snarkdown from "snarkdown";
 
@@ -51,7 +51,12 @@
             .then(() => {
                 morePostsLoaded = true;
                 lastPageLoaded.set($lastPageLoaded + 1);
-            })
+            });
+    }
+
+    function profile(user) {
+        userpage.set(user);
+        screen.set("user");
     }
 </script>
 
@@ -66,7 +71,7 @@
 </form>
 {#if $postHistoryLoaded}
     {#each $postList.slice().reverse() as post}
-        <p><strong>{post.u}:</strong> {@html snarkdown(DOMPurify.sanitize(post.p.replaceAll("\n", "\\n"))).replaceAll("\\n", "<br>")} </p>
+        <p><strong>{post.u} <button on:click={() => { profile(post.u) }}>profile</button>:</strong> {@html snarkdown(DOMPurify.sanitize(post.p.replaceAll("\n", "\\n"))).replaceAll("\\n", "<br>")} </p>
     {/each}
     {#if morePostsLoaded}
         <button on:click={loadMore}>Load more</button>
