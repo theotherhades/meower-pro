@@ -26,7 +26,13 @@
 <button class="buttonLink" on:click={() => { screen.set("home") }}>Back to Home</button><br>
 {#if pageLoaded}
     <h2>{targetUsername}</h2>
-    <p>{targetQuote}</p>
+    {#if targetQuote !== ""}
+        <p><b>Quote</b><br>
+        {targetQuote}</p>
+    {:else}
+        <p><b>Quote</b><br>
+        <i>{targetUsername} doesn't have a quote yet :(</i></p>
+    {/if}
 {:else}
     <i>Loading...</i>
 {/if}
