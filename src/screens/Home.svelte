@@ -1,7 +1,7 @@
 <script>
     export let cl;
     import loadForm from "../lib/miscutils";
-    import { screen, postList, postHistoryLoaded, lastPageLoaded, screenHeader, ulist, username, APIToken, userpage } from "../lib/stores";
+    import { screen, postList, postHistoryLoaded, lastPageLoaded, screenHeader, ulist, username, APIToken, userpage, homeLoaded } from "../lib/stores";
     import DOMPurify from "dompurify";
     import snarkdown from "snarkdown";
 
@@ -9,19 +9,22 @@
     let morePostsLoaded = true;
 
     // Load last page of home
-    fetch("https://api.meower.org/home")
-        .then((response) => response.text())
-        .then((responseText) => JSON.parse(responseText))
-        .then((homePageData) => {
-            let postUpdator = $postList;
+    if (!$homeLoaded) {
+        fetch("https://api.meower.org/home")
+            .then((response) => response.text())
+            .then((responseText) => JSON.parse(responseText))
+            .then((homePageData) => {
+                let postUpdator = $postList;
 
-            homePageData.autoget.reverse().forEach((item) => { postUpdator.push(item) });
-            postList.set(postUpdator);
-        })
-        .then(() => { 
-            postHistoryLoaded.set(true);
-            lastPageLoaded.set(1);
-         });
+                homePageData.autoget.reverse().forEach((item) => { postUpdator.push(item) });
+                postList.set(postUpdator);
+            })
+            .then(() => { 
+                postHistoryLoaded.set(true);
+                lastPageLoaded.set(1);
+                homeLoaded.set(true);
+            });
+    }
 
     function sendPost(postForm) {
         const post = loadForm(postForm);
@@ -63,7 +66,11 @@
 <p><strong>{$ulist.length} users online:</strong> 
 {$ulist.join(", ").slice(0, -2)}
 </p>
-<p><i>Viewing the last {$lastPageLoaded} pages of home ({$postList.length} posts)</i></p>
+{#if $lastPageLoaded > 1}
+    <p><i>Viewing the last {$lastPageLoaded} pages of home ({$postList.length} posts)</i></p>
+{:else}
+    <p><i>Viewing the last page of home ({$postList.length} posts)</i></p>
+{/if}
 
 <form on:submit|preventDefault={sendPost}>
     <input type="text" name="postContent" value="" placeholder="Once upon a time...">
@@ -71,7 +78,7 @@
 </form>
 {#if $postHistoryLoaded}
     {#each $postList.slice().reverse() as post}
-        <p><strong>{post.u} <button on:click={() => { profile(post.u) }}>profile</button>:</strong> {@html snarkdown(DOMPurify.sanitize(post.p.replaceAll("\n", "\\n"))).replaceAll("\\n", "<br>")} </p>
+        <p><strong><button class="buttonLink" on:click={() => { profile(post.u) }}>{post.u}</button>:</strong> {@html snarkdown(DOMPurify.sanitize(post.p.replaceAll("\n", "\\n"))).replaceAll("\\n", "<br>")} </p>
     {/each}
     {#if morePostsLoaded}
         <button on:click={loadMore}>Load more</button>
@@ -81,3 +88,17 @@
 {:else}
     <p>Loading posts...</p>
 {/if}
+
+<style>
+    :global(.buttonLink) {
+        /* https://stackoverflow.com/questions/1367409/how-to-make-button-look-like-a-link */
+        background: none!important;
+        border: none;
+        padding: 0!important;
+        color: #069;
+        text-decoration: underline;
+        cursor: pointer;
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 1em;
+    }
+</style>

@@ -50,7 +50,8 @@
     cl.on("ulist", (packet) => { ulist.set(packet.val.split(";")) });
 </script>
 
-<h1>{$screenHeader}</h1>
+{#if $screenHeader !== "HIDE"}<h1>{$screenHeader}</h1>{/if}
+
 {#if $screen === "start"}
     <Start />
 {:else if $screen === "login"}

@@ -6,6 +6,7 @@
     let targetQuote;
 
     if ($userpage === "") userpage.set("theotherhades");
+    screenHeader.set("HIDE");
 
     fetch(`https://api.meower.org/users/${$userpage}`, {
         headers: {
@@ -18,13 +19,13 @@
         .then((userdata) => {
             targetUsername = userdata._id;
             targetQuote = userdata.quote;
-            screenHeader.set(targetUsername);
             pageLoaded = true;
         });
 </script>
 
-<button on:click={() => { screen.set("home") }}>Back to Home</button><br>
+<button class="buttonLink" on:click={() => { screen.set("home") }}>Back to Home</button><br>
 {#if pageLoaded}
+    <h2>{targetUsername}</h2>
     <p>{targetQuote}</p>
 {:else}
     <i>Loading...</i>
