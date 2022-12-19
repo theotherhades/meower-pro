@@ -10,3 +10,4 @@ export const username = writable("");
 export const APIToken = writable("");
 export const userpage = writable("");
 export const homeLoaded = writable(false);
+export const devmode = writable(false);

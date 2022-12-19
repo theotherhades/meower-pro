@@ -1,6 +1,8 @@
 <script>
     import Cloudlink from "./lib/cloudlink.js";
+    import DevOptions from "./lib/devops.js";
     import { screen, screenHeader, postList, postHistoryLoaded, ulist, username, APIToken } from "./lib/stores.js";
+    import Navbar from "./lib/Navbar.svelte";
     import Login from "./screens/Login.svelte";
     import Home from "./screens/Home.svelte";
     import Start from "./screens/Start.svelte";
@@ -48,21 +50,32 @@
     cl.on("error", onError);
     cl.on("direct", onDirect);
     cl.on("ulist", (packet) => { ulist.set(packet.val.split(";")) });
+
+    window.devops = new DevOptions();
 </script>
 
-{#if $screenHeader !== "HIDE"}<h1>{$screenHeader}</h1>{/if}
+<Navbar />
+<div class="main">
+    {#if $screenHeader !== "HIDE"}<h1>{$screenHeader}</h1>{/if}
 
-{#if $screen === "start"}
-    <Start />
-{:else if $screen === "login"}
-    <Login {cl} />
-{:else if $screen === "home"}
-    <Home {cl} />
-{:else if $screen === "user"}
-    <Userpage />
-{:else}
-    <center>
-        <h1>4040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040</h1>
-        <p>Error code <code>4040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040</code>: you are an idiot</p>
-    </center>
-{/if}
+    {#if $screen === "start"}
+        <Start />
+    {:else if $screen === "login"}
+        <Login {cl} />
+    {:else if $screen === "home"}
+        <Home {cl} />
+    {:else if $screen === "user"}
+        <Userpage />
+    {:else}
+        <center>
+            <h1>4040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040</h1>
+            <p>Error code <code>4040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040</code>: you are an idiot</p>
+        </center>
+    {/if}
+</div>
+
+<style>
+    .main {
+        margin-left: 10%;
+    }
+</style>
