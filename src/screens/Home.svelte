@@ -78,7 +78,7 @@
 </form>
 {#if $postHistoryLoaded}
     {#each $postList.slice().reverse() as post}
-        <p><strong><button class="buttonLink" on:click={() => { profile(post.u) }}>{post.u}</button>:</strong> {@html snarkdown(DOMPurify.sanitize(post.p.replaceAll("\n", "\\n"))).replaceAll("\\n", "<br>")} </p>
+        <p><a href="#" on:click|preventDefault={() => { profile(post.u) }}>{post.u}</a>: {@html snarkdown(DOMPurify.sanitize(post.p.replaceAll("\n", "\\n"))).replaceAll("\\n", "<br>")} </p>
     {/each}
     {#if morePostsLoaded}
         <button on:click={loadMore}>Load more</button>
@@ -88,17 +88,3 @@
 {:else}
     <p>Loading posts...</p>
 {/if}
-
-<style>
-    :global(.buttonLink) {
-        /* https://stackoverflow.com/questions/1367409/how-to-make-button-look-like-a-link */
-        background: none!important;
-        border: none;
-        padding: 0!important;
-        color: #069;
-        text-decoration: underline;
-        cursor: pointer;
-        font-family: 'Times New Roman', Times, serif;
-        font-size: 1em;
-    }
-</style>

@@ -23,7 +23,7 @@
         });
 </script>
 
-<button class="buttonLink" on:click={() => { screen.set("home") }}>Back to Home</button><br>
+<a href="#" on:click|preventDefault={() => { screen.set("home") }}>Back to Home</a><br>
 {#if pageLoaded}
     <h2>{targetUsername}</h2>
     {#if targetQuote !== ""}
