@@ -51,10 +51,10 @@
     cl.on("direct", onDirect);
     cl.on("ulist", (packet) => { ulist.set(packet.val.split(";")) });
 
-    window.devops = new DevOptions();
+    window.devops = new DevOptions(cl);
 </script>
 
-<Navbar />
+{#if ["start", "login"].includes($screen) == false}<Navbar />{/if}
 <div class="main">
     {#if $screenHeader !== "HIDE"}<h1>{$screenHeader}</h1>{/if}
 
@@ -74,8 +74,10 @@
     {/if}
 </div>
 
+{#if ["start", "login"].includes($screen) == false}
 <style>
     .main {
         margin-left: 10%;
     }
 </style>
+{/if}
