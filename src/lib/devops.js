@@ -40,6 +40,14 @@ class DevOptions {
             this.disabledWarning();
         }
     }
+
+    disconnect() {
+        if (_devmode) {
+            this.cl.disconnect();
+        } else {
+            this.disabledWarning();
+        }
+    }
 }
 
 export default DevOptions;

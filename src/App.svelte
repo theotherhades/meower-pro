@@ -23,7 +23,7 @@
     }
 
     function onDirect(cmd) {
-        console.log(`%cINCOMING: ${JSON.stringify(cmd)}`, "color: gray; font-style: italic");
+        console.log(`%cCLJS%c< INCOMING%c packet: ${JSON.stringify(cmd)}`, "color: black; background-color: mediumspringgreen; padding: 2px;", "background-color: black; padding: 3px;", "color: gray; font-style: italic;");
 
         if (Object.hasOwn(cmd.val, "post_origin")) {
             if (cmd.val.post_origin === "home" && $screen === "home") {

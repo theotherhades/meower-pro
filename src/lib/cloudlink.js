@@ -32,7 +32,7 @@ class Cloudlink {
         };
     }
     send(data) {
-        console.log(`%cOUTGOING: ${JSON.stringify(data)}`, "color: gray; font-style: italic");
+        console.log(`%cCLJS%c> OUTGOING%c packet: ${JSON.stringify(data)}`, "color: black; background-color: mediumspringgreen; padding: 2px;", "background-color: black; padding: 3px;", "color: gray; font-style: italic;");
         this.ws.send(JSON.stringify(data));
     }
     on(event, cb) {
