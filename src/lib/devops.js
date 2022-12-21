@@ -1,8 +1,13 @@
-import { devmode } from "./stores.js";
+import { devmode, postList } from "./stores.js";
 
+// like and subscribe
 let _devmode;
 devmode.subscribe(value => {
     _devmode = value;
+});
+let _postList;
+postList.subscribe(value => {
+    _postList = value;
 });
 
 class DevOptions {
@@ -47,6 +52,10 @@ class DevOptions {
         } else {
             this.disabledWarning();
         }
+    }
+
+    postlist() {
+        console.log(JSON.stringify(_postList));
     }
 }
 
